@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white border rounded shadow p-6">
             <div class="border-b pb-4 mb-6">
-                <h1 class="text-xl font-semibold">Dashboard</h1>
+                <h1 class="text-xl font-semibold">Test</h1>
             </div>
 
             @if(Session::has('message'))
