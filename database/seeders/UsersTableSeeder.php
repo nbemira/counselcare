@@ -1,9 +1,9 @@
 <?php
 
-namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,20 +14,19 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Example data
-        $users = [
+        DB::table('users')->truncate();
+
+        DB::table('users')->updateOrInsert(
+            ['ic' => '020830120078'], // Unique column to check
             [
-                'ic' => '020830120078',
                 'name' => 'Nurin',
-                'password' => bcrypt('Nrn300802//'),
                 'email' => 'nurinbatrisyia3008@yahoo.com',
+                'password' => Hash::make('password'),
                 'role' => 'admin',
                 'pass_status' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ];
-
-        DB::table('users')->insert($users);
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
     }
 }
