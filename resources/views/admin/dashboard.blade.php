@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white border rounded shadow p-4">
             <div class="border-b p-2 text-xl font-semibold">
-            Test
+            List of all students
             </div>
             <div class="p-2">
                 <!-- Message and Add New Student Button -->
