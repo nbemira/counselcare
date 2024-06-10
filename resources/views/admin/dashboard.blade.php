@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-yellow-50">
         <div class="bg-white border rounded shadow p-4">
             <div class="border-b p-2 text-xl font-semibold">
             List of all students
