@@ -4,10 +4,10 @@
 <div class="py-12 bg-gray-100">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white border rounded-lg shadow p-6">
-            <div class="border-b pb-4 mb-4">
-                <h2 class="text-xl font-semibold text-center mb-6">Screening Score Reference</h2>
+        <div class="border-b pb-2 mb-6">
+        <h2 class="text-xl mb-3 font-semibold text-center text-gray-900">Screening Score Reference</h2>
             </div>
-            <div class="overflow-x-auto mb-6">
+            <div class="overflow-x-auto">
                 <table class="min-w-full bg-white rounded-lg overflow-hidden border border-gray-200 table-auto">
                     <thead class="bg-gray-100">
                         <tr>

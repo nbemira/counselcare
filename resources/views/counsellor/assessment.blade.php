@@ -44,7 +44,7 @@
                             @endphp
                             @if($categoryQuestions->isNotEmpty())
                                 <div class="mt-4">
-                                    <h3 class="text-lg text-center text-gray-800 font-medium mb-2">{{ $categoryName }}</h3>
+                                    <h3 class="text-lg text-gray-800 font-medium mb-2">{{ $categoryName }}</h3>
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
@@ -57,7 +57,7 @@
                                             @foreach($categoryQuestions as $key => $question)
                                                 <tr>
                                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{{ $loop->iteration }}</td>
-                                                    <td class="px-4 py-4 whitespace-normal text-sm text-gray-900 text-center">{{ $question->question }}</td>
+                                                    <td class="px-4 py-4 whitespace-normal text-sm text-gray-900 text-left">{{ $question->question }}</td>
                                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-center font-medium flex items-center justify-center space-x-2">
                                                         <a href="{{ route('counsellor.edit-question', $question->id) }}" class="text-indigo-600 hover:text-indigo-900">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-edit">
@@ -82,6 +82,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             @endif
                         @endforeach
@@ -92,9 +93,9 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                        <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">#</th>
-                                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-2/3">Question</th>
-                                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-36">Actions</th>
+                                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">#</th>
+                                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-10/12">Question</th>
+                                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
