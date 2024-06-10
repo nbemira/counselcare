@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route('admin.manage-students') }}">
                         <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="w-32 h-32"> <!-- Adjusted width and height to 32 -->
                     </a>
                 </div>
@@ -14,7 +14,7 @@
                 @auth
                     @if (Auth::user()->role === 'admin')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            <x-nav-link :href="route('admin.manage-students')" :active="request()->routeIs('admin.manage-students')">
                                 {{ __('Manage Students') }}
                             </x-nav-link>
                             <x-nav-link :href="route('admin.manage_counsellors')" :active="request()->routeIs('admin.manage_counsellors')">
@@ -81,7 +81,7 @@
     <!-- Responsive Navigation Menu -->
     <div id="responsive-menu" class="hidden sm:hidden bg-blue-300">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+            <x-responsive-nav-link :href="route('admin.manage-students')" :active="request()->routeIs('admin.manage-students')">
                 {{ __('Manage Students') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.manage_counsellors')" :active="request()->routeIs('admin.manage_counsellors')">

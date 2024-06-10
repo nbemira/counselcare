@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Check the user's role and redirect accordingly
         if (auth()->user()->role === 'admin') {
             // If the user is an admin
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.manage-students');
         } elseif (auth()->user()->role === 'counsellor') {
             // If the user is a counsellor
             return redirect()->route('counsellor.assessment');
@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::middleware('auth')->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'getStudentList'])->name('admin.dashboard');
+        Route::get('/admin/manage-students', [AdminController::class, 'getStudentList'])->name('admin.manage-students');
         Route::get('/admin/student-form', [AdminController::class, 'getStudentForm'])->name('admin.student-form');
         Route::post('/admin/add-student', [AdminController::class, 'postAddStudent'])->name('admin.add-student');
         Route::get('/admin/edit-student-form/{ic}', [AdminController::class, 'getEditStudent'])->name('admin.edit-student-form');

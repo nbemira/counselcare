@@ -25,7 +25,7 @@ class AdminController extends Controller
 
         $students = $students->latest()->paginate(50); // Order by creation time in descending order
 
-        return view('admin.dashboard', compact('students'));
+        return view('admin.manage-students', compact('students'));
     }
     
     public function getStudentForm()
@@ -61,12 +61,12 @@ class AdminController extends Controller
     
             session()->flash('message', 'Student added successfully!');
     
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.manage-students');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) {
                 return redirect()->route('admin.student-form')->with('error', 'Student with this IC already exists.');
             } else {
-                return redirect()->route('admin.dashboard')->with('error', 'An error occurred while adding the Student.');
+                return redirect()->route('admin.manage-students')->with('error', 'An error occurred while adding the Student.');
             }
         }
     }    
@@ -76,7 +76,7 @@ class AdminController extends Controller
         $student = Student::where('ic', $ic)->first();
     
         if (!$student) {
-            return redirect()->route('admin.dashboard')->with('error', 'Student not found');
+            return redirect()->route('admin.manage-students')->with('error', 'Student not found');
         }
     
         return view('admin.edit-student-form', compact('student'));
@@ -109,7 +109,7 @@ class AdminController extends Controller
 
         session()->flash('message', 'Student updated successfully!');
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.manage-students');
     }
 
     public function deleteStudent(string $ic)
@@ -123,7 +123,7 @@ class AdminController extends Controller
             session()->flash('error', 'Student not found');
         }
     
-        // Redirect back to the dashboard route
-        return redirect()->route('admin.dashboard')->with('reload', true);
+        // Redirect back to the manage students route
+        return redirect()->route('admin.manage-students')->with('reload', true);
     }    
 }
