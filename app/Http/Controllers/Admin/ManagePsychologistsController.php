@@ -38,7 +38,7 @@ class ManagePsychologistsController extends Controller
             return $psychologist;
         });
     
-        return view('admin.manage_psychologists', compact('psychologists'));
+        return view('admin.manage-psychologists', compact('psychologists'));
     }    
    
     public function getPsychologistForm()
@@ -81,7 +81,7 @@ class ManagePsychologistsController extends Controller
 
         session()->flash('message', 'Psychologist added successfully!');
 
-        return redirect()->route('admin.manage_psychologists');
+        return redirect()->route('admin.manage-psychologists');
     }
 
     public function getEditPsychologist($id)
@@ -89,7 +89,7 @@ class ManagePsychologistsController extends Controller
         $psychologist = Psychologist::find($id);
 
         if (!$psychologist) {
-            return redirect()->route('admin.manage_psychologists')->with('error', 'Psychologist not found');
+            return redirect()->route('admin.manage-psychologists')->with('error', 'Psychologist not found');
         }
 
         return view('admin.edit-psychologist-form', compact('psychologist'));
@@ -111,7 +111,7 @@ class ManagePsychologistsController extends Controller
         $psychologist = Psychologist::find($id);
     
         if (!$psychologist) {
-            return redirect()->route('admin.manage_psychologists')->with('error', 'Psychologist not found');
+            return redirect()->route('admin.manage-psychologists')->with('error', 'Psychologist not found');
         }
     
         // Handle file upload if a new image is provided
@@ -155,7 +155,7 @@ class ManagePsychologistsController extends Controller
     
         session()->flash('message', 'Psychologist updated successfully!');
     
-        return redirect()->route('admin.manage_psychologists');
+        return redirect()->route('admin.manage-psychologists');
     }    
 
     public function deletePsychologist($id)
@@ -173,6 +173,6 @@ class ManagePsychologistsController extends Controller
             session()->flash('error', 'Psychologist not found');
         }
 
-        return redirect()->route('admin.manage_psychologists');
+        return redirect()->route('admin.manage-psychologists');
     }
 }

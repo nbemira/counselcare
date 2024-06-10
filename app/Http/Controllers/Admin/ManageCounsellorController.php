@@ -25,7 +25,7 @@ class ManageCounsellorController extends Controller
     
         $counsellors = $query->latest()->paginate(5);
     
-        return view('admin.manage_counsellors', compact('counsellors'));
+        return view('admin.manage-counsellors', compact('counsellors'));
     }    
 
     public function getCounsellorForm()
@@ -50,12 +50,12 @@ class ManageCounsellorController extends Controller
             $counsellor->save();
 
             session()->flash('message', 'Counsellor added successfully!');
-            return redirect()->route('admin.manage_counsellors');
+            return redirect()->route('admin.manage-counsellors');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) {
                 return redirect()->route('admin.counsellor-form')->with('error', 'Counsellor with this IC already exists.');
             } else {
-                return redirect()->route('admin.manage_counsellors')->with('error', 'An error occurred while adding the Counsellor.');
+                return redirect()->route('admin.manage-counsellors')->with('error', 'An error occurred while adding the Counsellor.');
             }
         }
     }
@@ -78,7 +78,7 @@ class ManageCounsellorController extends Controller
         $counsellor->update($request->all());
 
         session()->flash('message', 'Counsellor updated successfully!');
-        return redirect()->route('admin.manage_counsellors');
+        return redirect()->route('admin.manage-counsellors');
     }
 
     public function deleteCounsellor(string $ic)
@@ -92,6 +92,6 @@ class ManageCounsellorController extends Controller
             session()->flash('error', 'Counsellor not found');
         }
     
-        return redirect()->route('admin.manage_counsellors');
+        return redirect()->route('admin.manage-counsellors');
     }
 }

@@ -66,14 +66,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/admin/edit-student/{ic}', [AdminController::class, 'putEditStudent'])->name('admin.edit-student');
         Route::delete('/admin/delete-student/{ic}', [AdminController::class, 'deleteStudent'])->name('admin.delete-student');
 
-        Route::get('/admin/manage_counsellors', [ManageCounsellorController::class, 'getCounsellorList'])->name('admin.manage_counsellors');
+        Route::get('/admin/manage-counsellors', [ManageCounsellorController::class, 'getCounsellorList'])->name('admin.manage-counsellors');
         Route::get('/admin/counsellor-form', [ManageCounsellorController::class, 'getCounsellorForm'])->name('admin.counsellor-form');
         Route::post('/admin/add-counsellor', [ManageCounsellorController::class, 'postAddCounsellor'])->name('admin.add-counsellor');
         Route::get('/admin/edit-counsellor-form/{ic}', [ManageCounsellorController::class, 'getEditCounsellor'])->name('admin.edit-counsellor-form');
         Route::put('/admin/edit-counsellor/{ic}', [ManageCounsellorController::class, 'putEditCounsellor'])->name('admin.edit-counsellor');
         Route::delete('/admin/delete-counsellor/{ic}', [ManageCounsellorController::class, 'deleteCounsellor'])->name('admin.delete-counsellor');
 
-        Route::get('/admin/manage_psychologists', [ManagePsychologistsController::class, 'getPsychologistList'])->name('admin.manage_psychologists');
+        Route::get('/admin/manage-psychologists', [ManagePsychologistsController::class, 'getPsychologistList'])->name('admin.manage-psychologists');
         Route::get('/admin/psychologist-form', [ManagePsychologistsController::class, 'getPsychologistForm'])->name('admin.psychologist-form');
         Route::post('/admin/add-psychologist', [ManagePsychologistsController::class, 'postAddPsychologist'])->name('admin.add-psychologist');
         Route::get('/admin/edit-psychologist-form/{id}', [ManagePsychologistsController::class, 'getEditPsychologist'])->name('admin.edit-psychologist-form');

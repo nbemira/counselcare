@@ -17,10 +17,10 @@
                             <x-nav-link :href="route('admin.manage-students')" :active="request()->routeIs('admin.manage-students')">
                                 {{ __('Manage Students') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.manage_counsellors')" :active="request()->routeIs('admin.manage_counsellors')">
+                            <x-nav-link :href="route('admin.manage-counsellors')" :active="request()->routeIs('admin.manage-counsellors')">
                                 {{ __('Manage Counsellors') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.manage_psychologists')" :active="request()->routeIs('admin.manage_psychologists')">
+                            <x-nav-link :href="route('admin.manage-psychologists')" :active="request()->routeIs('admin.manage-psychologists')">
                                 {{ __('Manage Psychologists') }}
                             </x-nav-link>
                         </div>
@@ -84,10 +84,10 @@
             <x-responsive-nav-link :href="route('admin.manage-students')" :active="request()->routeIs('admin.manage-students')">
                 {{ __('Manage Students') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.manage_counsellors')" :active="request()->routeIs('admin.manage_counsellors')">
+            <x-responsive-nav-link :href="route('admin.manage-counsellors')" :active="request()->routeIs('admin.manage-counsellors')">
                 {{ __('Manage Counsellors') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.manage_psychologists')" :active="request()->routeIs('admin.manage_psychologists')">
+            <x-responsive-nav-link :href="route('admin.manage-psychologists')" :active="request()->routeIs('admin.manage-psychologists')">
                 {{ __('Manage Psychologists') }}
             </x-responsive-nav-link>
         </div>
