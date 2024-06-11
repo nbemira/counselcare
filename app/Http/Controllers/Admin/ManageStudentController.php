@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Database\QueryException;
 
-class AdminController extends Controller
+class ManageStudentController extends Controller
 {
     public function getStudentList(Request $request)
     {

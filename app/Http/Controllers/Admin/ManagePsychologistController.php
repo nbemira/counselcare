@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Image;
 
-class ManagePsychologistsController extends Controller
+class ManagePsychologistController extends Controller
 {
 
     public function getPsychologistList(Request $request)

@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ManageStudentController;
 use App\Http\Controllers\Admin\ManageCounsellorController;
-use App\Http\Controllers\Admin\ManageContactsController;
-use App\Http\Controllers\Admin\ManagePsychologistsController;
+use App\Http\Controllers\Admin\ManagePsychologistController;
 
 use App\Http\Controllers\CounsellorController;
 use App\Http\Controllers\Counsellor\CounsellorAssessmentController;
@@ -59,12 +58,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::middleware('auth')->group(function () {
-        Route::get('/admin/manage-students', [AdminController::class, 'getStudentList'])->name('admin.manage-students');
-        Route::get('/admin/student-form', [AdminController::class, 'getStudentForm'])->name('admin.student-form');
-        Route::post('/admin/add-student', [AdminController::class, 'postAddStudent'])->name('admin.add-student');
-        Route::get('/admin/edit-student-form/{ic}', [AdminController::class, 'getEditStudent'])->name('admin.edit-student-form');
-        Route::put('/admin/edit-student/{ic}', [AdminController::class, 'putEditStudent'])->name('admin.edit-student');
-        Route::delete('/admin/delete-student/{ic}', [AdminController::class, 'deleteStudent'])->name('admin.delete-student');
+        Route::get('/admin/manage-students', [ManageStudentController::class, 'getStudentList'])->name('admin.manage-students');
+        Route::get('/admin/student-form', [ManageStudentController::class, 'getStudentForm'])->name('admin.student-form');
+        Route::post('/admin/add-student', [ManageStudentController::class, 'postAddStudent'])->name('admin.add-student');
+        Route::get('/admin/edit-student-form/{ic}', [ManageStudentController::class, 'getEditStudent'])->name('admin.edit-student-form');
+        Route::put('/admin/edit-student/{ic}', [ManageStudentController::class, 'putEditStudent'])->name('admin.edit-student');
+        Route::delete('/admin/delete-student/{ic}', [ManageStudentController::class, 'deleteStudent'])->name('admin.delete-student');
 
         Route::get('/admin/manage-counsellors', [ManageCounsellorController::class, 'getCounsellorList'])->name('admin.manage-counsellors');
         Route::get('/admin/counsellor-form', [ManageCounsellorController::class, 'getCounsellorForm'])->name('admin.counsellor-form');
@@ -73,12 +72,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/admin/edit-counsellor/{ic}', [ManageCounsellorController::class, 'putEditCounsellor'])->name('admin.edit-counsellor');
         Route::delete('/admin/delete-counsellor/{ic}', [ManageCounsellorController::class, 'deleteCounsellor'])->name('admin.delete-counsellor');
 
-        Route::get('/admin/manage-psychologists', [ManagePsychologistsController::class, 'getPsychologistList'])->name('admin.manage-psychologists');
-        Route::get('/admin/psychologist-form', [ManagePsychologistsController::class, 'getPsychologistForm'])->name('admin.psychologist-form');
-        Route::post('/admin/add-psychologist', [ManagePsychologistsController::class, 'postAddPsychologist'])->name('admin.add-psychologist');
-        Route::get('/admin/edit-psychologist-form/{id}', [ManagePsychologistsController::class, 'getEditPsychologist'])->name('admin.edit-psychologist-form');
-        Route::put('/admin/edit-psychologist/{id}', [ManagePsychologistsController::class, 'putEditPsychologist'])->name('admin.edit-psychologist');
-        Route::delete('/admin/delete-psychologist/{id}', [ManagePsychologistsController::class, 'deletePsychologist'])->name('admin.delete-psychologist');
+        Route::get('/admin/manage-psychologists', [ManagePsychologistController::class, 'getPsychologistList'])->name('admin.manage-psychologists');
+        Route::get('/admin/psychologist-form', [ManagePsychologistController::class, 'getPsychologistForm'])->name('admin.psychologist-form');
+        Route::post('/admin/add-psychologist', [ManagePsychologistController::class, 'postAddPsychologist'])->name('admin.add-psychologist');
+        Route::get('/admin/edit-psychologist-form/{id}', [ManagePsychologistController::class, 'getEditPsychologist'])->name('admin.edit-psychologist-form');
+        Route::put('/admin/edit-psychologist/{id}', [ManagePsychologistController::class, 'putEditPsychologist'])->name('admin.edit-psychologist');
+        Route::delete('/admin/delete-psychologist/{id}', [ManagePsychologistController::class, 'deletePsychologist'])->name('admin.delete-psychologist');
     });
 
     /* ------- Counsellor Route -------*/
