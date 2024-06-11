@@ -4,19 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background {
+            background-image: url('/images/smsm_bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-<body class="font-sans text-gray-900 antialiased bg-gray-100">
+<body class="font-sans text-gray-900 antialiased bg-gray-100 background">
     <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0">
         <!-- Logo -->
-        <div class="flex justify-center mb-6">
-            <a href="/">
-                <img src="{{ asset('images\logo.svg') }}" alt="Logo" class="w-32 h-32">
-            </a>
+        <div class="flex justify-center mb-6 relative">
+            <div class="rounded-full bg-white bg-opacity-50">
+                <a href="/">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="w-32 h-32">
+                </a>
+            </div>
         </div>
 
         <!-- Form Container -->
@@ -27,6 +35,13 @@
                     {{ session('status') }}
                 </div>
             @endif
+
+        <!-- Error Message -->
+        @if (session('error'))
+            <div class="mb-4 text-red-500 text-sm">
+                {{ session('error') }}
+            </div>
+        @endif
 
             <!-- Form -->
             <form method="POST" action="{{ route('student.login') }}">

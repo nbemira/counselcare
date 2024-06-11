@@ -15,27 +15,48 @@ use PDF;
 
 class CaseController extends Controller
 {
-    public function unanswered()
+    public function unanswered(Request $request)
     {
+        $search = $request->input('search');
+    
         $unansweredStudents = Student::whereNotIn('ic', function($query) {
             $query->select('ic')->from('results');
-        })->get();
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                      ->orWhere('ic', 'like', '%' . $search . '%')
+                      ->orWhere('class', 'like', '%' . $search . '%');
+            });
+        })
+        ->get();
+    
+        return view('counsellor.unanswered', ['unansweredStudents' => $unansweredStudents, 'search' => $search]);
+    }     
 
-        return view('counsellor.unanswered', ['unansweredStudents' => $unansweredStudents]);
-    }
-
-    public function passed()
+    public function passed(Request $request)
     {
+        $search = $request->input('search');
+    
         $passedStudents = Result::join('students', 'results.ic', '=', 'students.ic')
             ->where('results.status', 1)
             ->where('results.assessment_round', 1)
+            ->when($search, function ($query, $search) {
+                return $query->where(function($query) use ($search) {
+                    $query->where('students.name', 'like', '%' . $search . '%')
+                          ->orWhere('students.ic', 'like', '%' . $search . '%')
+                          ->orWhere('students.class', 'like', '%' . $search . '%');
+                });
+            })
             ->get(['students.ic', 'students.name', 'students.class', 'results.created_at', 'results.marks_d', 'results.marks_a', 'results.marks_s']);
+    
+        return view('counsellor.passed', ['passedStudents' => $passedStudents, 'search' => $search]);
+    }    
 
-        return view('counsellor.passed', ['passedStudents' => $passedStudents]);
-    }
-
-    public function intervention()
+    public function intervention(Request $request)
     {
+        $search = $request->input('search');
+    
         $interventionStudents = Result::join('students', 'results.ic', '=', 'students.ic')
             ->leftJoin('interventions', 'students.ic', '=', 'interventions.ic')
             ->leftJoin('results as round2', function($join) {
@@ -44,6 +65,13 @@ class CaseController extends Controller
             })
             ->where('results.status', 2)
             ->where('results.assessment_round', 1)
+            ->when($search, function ($query, $search) {
+                return $query->where(function($query) use ($search) {
+                    $query->where('students.name', 'like', '%' . $search . '%')
+                          ->orWhere('students.ic', 'like', '%' . $search . '%')
+                          ->orWhere('students.class', 'like', '%' . $search . '%');
+                });
+            })
             ->get([
                 'students.ic',
                 'students.name',
@@ -57,7 +85,7 @@ class CaseController extends Controller
                 'round2.status as round2_status'
             ]);
     
-        return view('counsellor.intervention', ['interventionStudents' => $interventionStudents]);
+        return view('counsellor.intervention', ['interventionStudents' => $interventionStudents, 'search' => $search]);
     }    
 
     public function updateInterventionDate(Request $request)
@@ -123,11 +151,20 @@ class CaseController extends Controller
         }
     }
 
-    public function secondPassed()
+    public function secondPassed(Request $request)
     {
+        $search = $request->input('search');
+    
         $secondPassedStudents = Result::join('students', 'results.ic', '=', 'students.ic')
             ->where('results.status', 1)
             ->where('results.assessment_round', 2)
+            ->when($search, function ($query, $search) {
+                return $query->where(function($query) use ($search) {
+                    $query->where('students.name', 'like', '%' . $search . '%')
+                          ->orWhere('students.ic', 'like', '%' . $search . '%')
+                          ->orWhere('students.class', 'like', '%' . $search . '%');
+                });
+            })
             ->get([
                 'students.ic',
                 'students.name',
@@ -137,26 +174,35 @@ class CaseController extends Controller
                 'results.marks_a as second_marks_a',
                 'results.marks_s as second_marks_s',
             ]);
-
+    
         // Fetch the first assessment marks for each student
         foreach ($secondPassedStudents as $student) {
             $firstAssessment = Result::where('ic', $student->ic)
                 ->where('assessment_round', 1)
                 ->first(['marks_d as first_marks_d', 'marks_a as first_marks_a', 'marks_s as first_marks_s']);
-
+    
             $student->first_marks_d = $firstAssessment->first_marks_d ?? null;
             $student->first_marks_a = $firstAssessment->first_marks_a ?? null;
             $student->first_marks_s = $firstAssessment->first_marks_s ?? null;
         }
+    
+        return view('counsellor.second-passed', ['secondPassedStudents' => $secondPassedStudents, 'search' => $search]);
+    }    
 
-        return view('counsellor.second-passed', ['secondPassedStudents' => $secondPassedStudents]);
-    }
-
-    public function secondIntervention()
+    public function secondIntervention(Request $request)
     {
+        $search = $request->input('search');
+    
         $secondInterventionStudents = Result::join('students', 'results.ic', '=', 'students.ic')
             ->where('results.status', 2)
             ->where('results.assessment_round', 2)
+            ->when($search, function ($query, $search) {
+                return $query->where(function($query) use ($search) {
+                    $query->where('students.name', 'like', '%' . $search . '%')
+                          ->orWhere('students.ic', 'like', '%' . $search . '%')
+                          ->orWhere('students.class', 'like', '%' . $search . '%');
+                });
+            })
             ->get([
                 'students.ic',
                 'students.name',
@@ -166,20 +212,20 @@ class CaseController extends Controller
                 'results.marks_a as second_marks_a',
                 'results.marks_s as second_marks_s',
             ]);
-
+    
         // Fetch the first assessment marks for each student
         foreach ($secondInterventionStudents as $student) {
             $firstAssessment = Result::where('ic', $student->ic)
                 ->where('assessment_round', 1)
                 ->first(['marks_d as first_marks_d', 'marks_a as first_marks_a', 'marks_s as first_marks_s']);
-
+    
             $student->first_marks_d = $firstAssessment->first_marks_d ?? null;
             $student->first_marks_a = $firstAssessment->first_marks_a ?? null;
             $student->first_marks_s = $firstAssessment->first_marks_s ?? null;
         }
-
-        return view('counsellor.second-intervention', ['secondInterventionStudents' => $secondInterventionStudents]);
-    }
+    
+        return view('counsellor.second-intervention', ['secondInterventionStudents' => $secondInterventionStudents, 'search' => $search]);
+    }    
 
     public function selectPsychologist($studentIc)
     {

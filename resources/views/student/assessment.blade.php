@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-12 bg-gradient-to-r from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
+<div class="py-12 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-5xl mx-auto px-4 lg:px-8 flex justify-center items-center">
-        <div class="bg-white border rounded-lg shadow-xl p-15 flex items-center justify-center w-full">
+        <div class="bg-white border-2 border-blue-50 rounded-lg shadow-xl p-15 flex items-center justify-center w-full">
             <div class="p-4 w-full">
                 @if($canAccessAssessment)
                 <div class="flex items-center mb-4">
