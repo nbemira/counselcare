@@ -38,6 +38,11 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
+        // Check if pass_status is 0 and redirect to password update page if true
+        if ($user->pass_status == 0) {
+            return redirect()->route('profile.update-password-form');
+        }
+
         // Redirect to the appropriate dashboard based on the role
         switch ($user->role) {
             case 'admin':

@@ -36,6 +36,13 @@ class StudentLoginController extends Controller
     
         if (Auth::guard('student')->attempt($credentials, $remember)) {
             // Authentication was successful
+            $user = Auth::guard('student')->user();
+            
+            // Check if pass_status is 0 and redirect to password update page if true
+            if ($user->pass_status == 0) {
+                return redirect()->route('student.profile.update-password-form');
+            }
+            
             return redirect()->route('student.home');
         }
     
