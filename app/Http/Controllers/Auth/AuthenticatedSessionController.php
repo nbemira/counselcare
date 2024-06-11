@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         // Redirect to the appropriate dashboard based on the role
         switch ($user->role) {
             case 'admin':
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.manage-students');
             case 'counsellor':
                 return redirect()->route('counsellor.assessment');
             default:
