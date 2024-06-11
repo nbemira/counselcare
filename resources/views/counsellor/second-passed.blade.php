@@ -32,12 +32,12 @@
                     <td class="px-6 py-4 text-center text-sm text-gray-900">{{ $student->ic }}</td>
                     <td class="px-6 py-4 text-center text-sm text-gray-900">{{ $student->class }}</td>
                     <td class="px-6 py-4 text-center text-sm text-gray-900">{{ \Carbon\Carbon::parse($student->second_created_at)->format('d M Y g:i A') }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-blue-50">{{ $student->first_marks_d }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-blue-50">{{ $student->first_marks_a }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-blue-50">{{ $student->first_marks_s }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-yellow-50">{{ $student->second_marks_d }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-yellow-50">{{ $student->second_marks_a }}</td>
-                    <td class="px-6 py-2 text-center text-sm text-gray-900 bg-yellow-50">{{ $student->second_marks_s }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->first_marks_d }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->first_marks_a }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->first_marks_s }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->second_marks_d }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->second_marks_a }}</td>
+                    <td class="px-6 py-2 text-center text-sm text-gray-900">{{ $student->second_marks_s }}</td>
                 </tr>
                 @endforeach
             </tbody>

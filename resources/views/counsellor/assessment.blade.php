@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white border rounded shadow p-6">
             <div class="border-b p-2 text-xl text-gray-800 font-semibold">
-            List of Assessment Questions
+                List of Assessment Questions
             </div>
             <div class="p-4">
                 @if(Session::has('message'))
@@ -19,15 +19,26 @@
                     </div>
                 @endif
                 <div class="flex items-center justify-between mb-6">
-                <a href="{{ route('counsellor.add-question') }}" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-md shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105">Add New Question</a>
-                <div class="flex items-center space-x-4">
-                    <span id="assessmentStatusText" class="text-gray-700">{{ $assessmentEnabled ? 'Assessment Enabled' : 'Assessment Disabled' }}</span>
-                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in transform">
-                        <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer shadow-inner transform transition duration-200 ease-in-out" onchange="toggleAssessment()" {{ $assessmentEnabled ? 'checked' : '' }}>
-                        <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer shadow-inner transform transition duration-200 ease-in-out"></label>
+                    <a href="{{ route('counsellor.add-question') }}" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-md shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105">Add New Question</a>
+                    <div class="flex items-center space-x-4">
+                        <span id="assessmentStatusText" class="text-gray-700">{{ $assessmentEnabled ? 'Assessment Enabled' : 'Assessment Disabled' }}</span>
+                        <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in transform">
+                            <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer shadow-inner transform transition duration-200 ease-in-out" onchange="toggleAssessment()" {{ $assessmentEnabled ? 'checked' : '' }}>
+                            <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer shadow-inner transform transition duration-200 ease-in-out"></label>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="mb-6">
+                    <div class="p-4 bg-blue-50 border border-blue-200 rounded-md shadow-md">
+                        <h3 class="text-lg text-gray-800 font-medium mb-2">Answers for Each Question</h3>
+                        <ul class="list-disc list-inside ml-4">
+                            <li class="mb-1"><strong>Did not apply to me at all:</strong> 0 point</li>
+                            <li class="mb-1"><strong>Applied to me to some degree, or some of the time:</strong> 1 point</li>
+                            <li class="mb-1"><strong>Applied to me to a considerable degree, or a good part of the time:</strong> 2 point</li>
+                            <li><strong>Applied to me very much, or most of the time:</strong> 3 point</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <div class="min-w-full bg-white shadow overflow-hidden sm:rounded-lg">
                         @php

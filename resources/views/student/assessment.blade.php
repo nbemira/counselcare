@@ -36,6 +36,12 @@
                         </div>
                     @endif
                     <div class="container">
+                        <div class="mt-4 mb-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                                <div id="progress-bar" class="bg-blue-500 h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <div class="text-right mt-2 text-gray-700" id="progress-text">0% Complete</div>
+                        </div>
                         <form id="assessment-form" action="{{ route('submit-assessment') }}" method="POST">
                             @csrf
                             <input type="hidden" name="student_ic" value="{{ $studentIC }}">
@@ -70,7 +76,7 @@
                                 @endforeach
                             </div>
                             <div class="text-center mt-5 mb-4">
-                            <button type="submit" id="submit-btn" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hidden">Submit</button>
+                                <button type="submit" id="submit-btn" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hidden">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -97,6 +103,7 @@
             currentQuestion++;
             document.querySelectorAll('.question-container')[currentQuestion].classList.remove('hidden');
             updateButtonVisibility();
+            updateProgressBar();
         }
     }
 
@@ -106,6 +113,7 @@
             currentQuestion--;
             document.querySelectorAll('.question-container')[currentQuestion].classList.remove('hidden');
             updateButtonVisibility();
+            updateProgressBar();
         }
     }
 
@@ -116,7 +124,6 @@
             document.getElementById('submit-btn').classList.add('hidden');
         }
 
-            
         if (currentQuestion === 0) {
             document.getElementById('prev-btn').classList.add('hidden');
         } else {
@@ -124,11 +131,22 @@
         }
     }
 
+    function updateProgressBar() {
+        var progress = (currentQuestion / totalQuestions) * 100;
+        document.getElementById('progress-bar').style.width = progress + '%';
+        document.getElementById('progress-text').textContent = Math.round(progress) + '% Complete';
+    }
+
     function validateAndProceed() {
-        var selectedAnswer = document.querySelector('input[name="answers[' + document.querySelectorAll('.question-container')[currentQuestion].getAttribute('data-question-id') + ']"]:checked');
+        var questionContainer = document.querySelectorAll('.question-container')[currentQuestion];
+        var selectedAnswer = questionContainer.querySelector('input[name="answers[' + questionContainer.getAttribute('data-question-id') + ']"]:checked');
+        
+        console.log('Current Question ID:', questionContainer.getAttribute('data-question-id')); // Debug
+        console.log('Selected Answer:', selectedAnswer); // Debug
+        
         if (selectedAnswer) {
             // Remove the selected-answer class from all labels
-            var allLabels = document.querySelectorAll('.question-container')[currentQuestion].querySelectorAll('label');
+            var allLabels = questionContainer.querySelectorAll('label');
             allLabels.forEach((label) => {
                 label.classList.remove('selected-answer');
             });
@@ -150,5 +168,8 @@
         radio.addEventListener('change', validateAndProceed);
     });
 
+    // Initialize the progress bar
+    updateProgressBar();
 </script>
+
 @endsection

@@ -6,7 +6,7 @@
         <div class="bg-white border rounded-lg shadow p-6">
             <div class="border-b pb-4 mb-4 flex justify-between items-center">
                 <h2 class="text-xl font-semibold text-gray-800">Case Management</h2>
-                <a href="{{ route('counsellor.screening-score-reference') }}" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Screening Score Reference</a>
+                <a href="{{ route('counsellor.screening-score-reference') }}" target="_blank" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-md shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105">Screening Score Reference</a>
             </div>
             <ul class="flex space-x-6 mt-4">
                 <li class="relative group">

@@ -12,17 +12,17 @@
                     <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowspan="2">IC</th>
                     <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Class</th>
                     <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Date Submitted</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="3">First Assessment</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="3">Second Assessment</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-100" colspan="3">First Assessment</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-100" colspan="3">Second Assessment</th>
                     <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Assign Psychologist</th>
                 </tr>
                 <tr>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">D</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">A</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">S</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">D</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">A</th>
-                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12">S</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-blue-50">D</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-blue-50">A</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-blue-50">S</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-yellow-50">D</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-yellow-50">A</th>
+                    <th class="px-6 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12 bg-yellow-50">S</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
