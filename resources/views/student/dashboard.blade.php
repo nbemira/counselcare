@@ -20,6 +20,12 @@
                 </div>
             @endif
 
+            @if($interventionNeeded)
+                <div class="bg-blue-400 text-white px-4 py-2 rounded mb-4 text-center">
+                    A counsellor will reach out to you soon to schedule an intervention. Please keep an eye on your MOE email for further details.
+                </div>
+            @endif
+
             <h2 class="text-xl font-semibold text-center mb-6">Result</h2>
             <div class="flex justify-center gap-4 mb-6">
                 @foreach(['Depression' => 'from-blue-200 to-blue-400', 'Anxiety' => 'from-yellow-200 to-yellow-400', 'Stress' => 'from-pink-200 to-pink-400'] as $category => $gradient)

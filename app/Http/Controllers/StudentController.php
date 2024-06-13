@@ -157,12 +157,17 @@ class StudentController extends Controller
             ->select('category.category', DB::raw('SUM(student_question.weightage) as total_weightage'))
             ->groupBy('category.category')
             ->get();
-    
+
+        $interventionNeeded = false;
+
         foreach ($categoryWeightages as $weightage) {
             $weightage->severity = $this->getCategorySeverity($weightage->category, $weightage->total_weightage);
+            if (in_array($weightage->severity, ['Moderate', 'Severe', 'Very Severe'])) {
+                $interventionNeeded = true;
+            }
         }
-    
-        return view('student.dashboard', compact('categoryWeightages'));
+
+        return view('student.dashboard', compact('categoryWeightages', 'interventionNeeded'));
     }         
 
     private function getCategorySeverity($category, $weightage) {

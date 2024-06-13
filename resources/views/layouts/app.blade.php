@@ -19,14 +19,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="@yield('container-class', 'min-h-screen bg-gray-100')">
         @if (Auth::check())
             @if (Auth::user()->role === 'admin')
                 @include('components.admin-navigation')
             @elseif (Auth::user()->role === 'counsellor')
-                @include('components.counsellor-navigation') <!-- Include counselor navigation for counselor -->
+                @include('components.counsellor-navigation')
             @elseif (Auth::guard('student')->check())
-                @include('components.student-navigation') <!-- Include student navigation for student -->
+                @include('components.student-navigation')
             @endif
         @endif
 
