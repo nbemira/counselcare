@@ -56,7 +56,7 @@ class CounsellorAssessmentController extends Controller
         $question->category_id = $request->category;
         $question->save();
 
-        return redirect()->back()->with('message', 'Question updated successfully.');
+        return redirect()->route('counsellor.assessment')->with('message', 'Question updated successfully.');
     }
 
     public function deleteQuestion(Question $question)
