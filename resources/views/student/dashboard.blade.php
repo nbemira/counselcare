@@ -53,12 +53,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categoryWeightages as $weightage)
-                            <tr class="border-b border-gray-200">
-                                <td class="py-3 px-4 text-center">{{ $weightage->category }}</td>
-                                <td class="py-3 px-4 text-center">{{ $weightage->total_weightage }}</td>
-                                <td class="py-3 px-4 text-center">{{ $weightage->severity }}</td>
-                            </tr>
+                        @php
+                            // Define the order of categories
+                            $categoryOrder = ['Depression', 'Anxiety', 'Stress'];
+                        @endphp
+
+                        @foreach ($categoryOrder as $category)
+                            @php
+                                // Find the weightage data for the current category
+                                $weightage = $categoryWeightages->firstWhere('category', $category);
+                            @endphp
+
+                            @if ($weightage)
+                                <tr class="border-b border-gray-200">
+                                    <td class="py-3 px-4 text-center">{{ $weightage->category }}</td>
+                                    <td class="py-3 px-4 text-center">{{ $weightage->total_weightage }}</td>
+                                    <td class="py-3 px-4 text-center">{{ $weightage->severity }}</td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

@@ -135,12 +135,6 @@ Route::post('student/password/email', [StudentForgotPasswordController::class, '
 Route::get('student/password/reset/{token}', [StudentResetPasswordController::class, 'showResetForm'])->name('student.password.reset');
 Route::post('student/password/reset', [StudentResetPasswordController::class, 'reset'])->name('student.password.update');
 
-// Password Reset Routes for Students...
-Route::get('student/password/reset', [StudentForgotPasswordController::class, 'showLinkRequestForm'])->name('student.password.request');
-Route::post('student/password/email', [StudentForgotPasswordController::class, 'sendResetLinkEmail'])->name('student.password.email');
-Route::get('student/password/reset/{token}', [StudentResetPasswordController::class, 'showResetForm'])->name('student.password.reset');
-Route::post('student/password/reset', [StudentResetPasswordController::class, 'reset'])->name('student.password.update');
-
 Route::get('password/reset', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('password/email', [PasswordResetLinkController::class, 'store'])->name('password.email');
 Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
