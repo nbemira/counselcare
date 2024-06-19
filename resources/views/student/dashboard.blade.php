@@ -37,7 +37,7 @@
             @endphp
 
             @if($interventionNeeded && $formattedCategories)
-                <div class="bg-blue-400 text-white px-4 py-2 rounded mb-4 text-center">
+                <div class="bg-blue-400 text-white px-4 py-2 rounded mb-4 text-justify">
                     Your results indicate that {{ $formattedCategories }} symptoms may be affecting your overall well-being, and you would benefit from consulting a counsellor through a one-on-one intervention. A counsellor will reach out to you soon to schedule an intervention. Please keep an eye on your MOE email for further details.
                 </div>
             @endif
