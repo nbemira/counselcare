@@ -28,7 +28,7 @@
 
             <h2 class="text-xl font-semibold text-center mb-6">Result</h2>
             <div class="flex justify-center gap-4 mb-6">
-                @foreach(['Depression' => 'from-blue-200 to-blue-400', 'Anxiety' => 'from-yellow-200 to-yellow-400', 'Stress' => 'from-pink-200 to-pink-400'] as $category => $gradient)
+                @foreach(['Depression' => 'from-blue-200 to-blue-300', 'Anxiety' => 'from-yellow-200 to-yellow-300', 'Stress' => 'from-pink-200 to-pink-300'] as $category => $gradient)
                     <div class="result-card bg-gradient-to-r {{ $gradient }} border-{{ explode('-', $gradient)[1] }}-300 rounded p-6 text-center flex-1 transform transition-transform duration-500 hover:scale-105 hover:shadow-3xl">
                         <h3 class="font-semibold mb-2 text-gray-900">{{ $category }}</h3>
                         <hr class="mb-2 border-gray-900">
