@@ -9,14 +9,36 @@
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .eye-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+        }
+        .relative {
+            position: relative;
+        }
+        .input-container {
+            position: relative;
+        }
+        .input-container input {
+            padding-right: 2.5rem; /* Add space for the eye icon */
+        }
+    </style>
 </head>
-<body class="font-sans text-gray-900 antialiased bg-gray-100">
+<body class="font-sans text-gray-900 antialiased bg-gray-100 background">
     <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0">
         <!-- Logo -->
-        <div class="flex justify-center mb-6">
-            <a href="/">
-                <img src="{{ asset('images\logo.svg') }}" alt="Logo" class="w-32 h-32">
-            </a>
+        <div class="flex justify-center mb-6 relative">
+            <div class="rounded-full bg-white bg-opacity-50">
+                <a href="/">
+                    <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="w-32 h-32">
+                </a>
+            </div>
         </div>
 
         <!-- Form Container -->
@@ -38,18 +60,56 @@
                 </div>
 
                 <!-- Password -->
-                <div class="mb-4">
+                <div class="mb-4 input-container">
                     <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
-                    <input id="password" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="password" name="password" required autocomplete="new-password" />
+                    <div class="relative">
+                        <input id="password" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="password" name="password" required autocomplete="new-password" minlength="8" />
+                        <div id="togglePassword" class="eye-icon">
+                            <!-- Closed Eye Icon -->
+                            <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye-closed">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
+                                <path d="M3 15l2.5 -3.8" />
+                                <path d="M21 14.976l-2.492 -3.776" />
+                                <path d="M9 17l.5 -4" />
+                                <path d="M15 17l-.5 -4" />
+                            </svg>
+                            <!-- Open Eye Icon -->
+                            <svg id="eyeOpen" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                            </svg>
+                        </div>
+                    </div>
                     @error('password')
                         <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="mb-4">
+                <div class="mb-4 input-container">
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700">{{ __('Confirm Password') }}</label>
-                    <input id="password_confirmation" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="password" name="password_confirmation" required autocomplete="new-password" />
+                    <div class="relative">
+                        <input id="password_confirmation" class="block mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="password" name="password_confirmation" required autocomplete="new-password" minlength="8" />
+                        <div id="togglePasswordConfirm" class="eye-icon">
+                            <!-- Closed Eye Icon -->
+                            <svg id="eyeClosedConfirm" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye-closed">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
+                                <path d="M3 15l2.5 -3.8" />
+                                <path d="M21 14.976l-2.492 -3.776" />
+                                <path d="M9 17l.5 -4" />
+                                <path d="M15 17l-.5 -4" />
+                            </svg>
+                            <!-- Open Eye Icon -->
+                            <svg id="eyeOpenConfirm" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                            </svg>
+                        </div>
+                    </div>
                     @error('password_confirmation')
                         <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
                     @enderror
@@ -63,5 +123,35 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const eyeOpen = document.getElementById('eyeOpen');
+        const eyeClosed = document.getElementById('eyeClosed');
+
+        const togglePasswordConfirm = document.getElementById('togglePasswordConfirm');
+        const passwordConfirm = document.getElementById('password_confirmation');
+        const eyeOpenConfirm = document.getElementById('eyeOpenConfirm');
+        const eyeClosedConfirm = document.getElementById('eyeClosedConfirm');
+
+        togglePassword.addEventListener('click', function (e) {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // Toggle the eye icons
+            eyeOpen.classList.toggle('hidden');
+            eyeClosed.classList.toggle('hidden');
+        });
+
+        togglePasswordConfirm.addEventListener('click', function (e) {
+            // Toggle the type attribute
+            const type = passwordConfirm.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirm.setAttribute('type', type);
+            // Toggle the eye icons
+            eyeOpenConfirm.classList.toggle('hidden');
+            eyeClosedConfirm.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Traits\ResetsPasswords;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Correct import for Auth facade
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password as FacadePassword;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password as RulesPassword;
+use App\Traits\ResetsPasswords;
 
 class StudentResetPasswordController extends Controller
 {
@@ -14,7 +18,7 @@ class StudentResetPasswordController extends Controller
 
     protected function broker()
     {
-        return Password::broker('students');
+        return FacadePassword::broker('students');
     }
 
     protected function guard()
@@ -29,24 +33,61 @@ class StudentResetPasswordController extends Controller
         );
     }
 
-    public function reset(Request $request) // Make sure this method is public
+    public function reset(Request $request)
     {
-        $request->validate($this->rules(), $this->validationErrorMessages());
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => [
+                'required',
+                'confirmed',
+                RulesPassword::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols(),
+            ],
+        ]);
 
-        // We will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
                 $this->resetPassword($user, $password);
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $response == Password::PASSWORD_RESET
+        return $response == FacadePassword::PASSWORD_RESET
                     ? $this->sendResetResponse($request, $response)
                     : $this->sendResetFailedResponse($request, $response);
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only(
+            'email', 'password', 'password_confirmation', 'token'
+        );
+    }
+
+    protected function resetPassword($user, $password)
+    {
+        $user->password = Hash::make($password);
+        $user->setRememberToken(Str::random(60));
+
+        // Increment pass_status by 1
+        $user->pass_status += 1;
+
+        $user->save();
+
+        event(new PasswordReset($user));
+    }
+
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return redirect()->route('student.login')->with('status', __($response));
+    }
+
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return back()->withInput($request->only('email'))
+                     ->withErrors(['email' => __($response)]);
     }
 }
