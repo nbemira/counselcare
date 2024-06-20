@@ -28,7 +28,7 @@ class ManageStudentController extends Controller
 
         return view('admin.manage-students', compact('students'));
     }
-
+    
     public function getStudentForm()
     {
         return view('admin.student-form');
@@ -40,12 +40,12 @@ class ManageStudentController extends Controller
             $this->validate($request, [
                 'ic' => 'required|string|digits:12|unique:students',
                 'password' => 'required|string|max:255',
-                'name' => 'required|string|max:255|regex:/^[a-zA-Z@ ]+$/',
-                'email' => 'required|email|max:255|unique:students',
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
                 'class' => 'required|string|max:255',
                 'gender' => 'required|in:male,female',
             ]);
-
+    
             $student = new Student();
             
             $student->password = bcrypt($request['password']);
@@ -57,20 +57,20 @@ class ManageStudentController extends Controller
             $student->pass_status = 0;
             $student->created_at = now();
             $student->updated_at = now();
-
+    
             $student->save();
-
+    
             session()->flash('message', 'Student added successfully!');
-
+    
             return redirect()->route('admin.manage-students');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) {
-                return redirect()->route('admin.student-form')->with('error', 'Student with this IC already exists.')->withInput();
+                return redirect()->route('admin.student-form')->with('error', 'Student with this IC already exists.');
             } else {
-                return redirect()->route('admin.manage-students')->with('error', 'An error occurred while adding the Student.')->withInput();
+                return redirect()->route('admin.manage-students')->with('error', 'An error occurred while adding the Student.');
             }
         }
-    }
+    }    
 
     public function getEditStudent($ic)
     {
@@ -87,8 +87,8 @@ class ManageStudentController extends Controller
     {
         $this->validate($request, [
             'ic' => 'required|string|digits:12',
-            'name' => 'required|string|max:255|regex:/^[a-zA-Z@ ]+$/',
-            'email' => 'required|email|max:255|unique:students,email,' . $ic . ',ic',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'class' => 'required|string|max:255',
             'gender' => 'required|in:male,female',
         ]);
