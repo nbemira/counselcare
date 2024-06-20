@@ -25,25 +25,35 @@
                 <form id="update-password-form" method="POST" action="{{ route('student.profile.update-password') }}">
                     @csrf
                     @method('PUT')
-                    <div class="mb-4">
+
+                    <div class="mb-4 relative">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="current_password">
                             Current Password
                         </label>
                         <input id="current_password" type="password" name="current_password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-outline">
+                        @error('current_password')
+                            <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 relative">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                             New Password
                         </label>
                         <input id="password" type="password" name="password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-outline">
+                        @error('password')
+                            <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 relative">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password_confirmation">
                             Confirm Password
                         </label>
                         <input id="password_confirmation" type="password" name="password_confirmation" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-outline">
+                        @error('password_confirmation')
+                            <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-4 flex items-center">
@@ -70,7 +80,7 @@
             document.getElementById('password'),
             document.getElementById('password_confirmation')
         ];
-        
+
         passwordFields.forEach(field => {
             if (field.type === 'password') {
                 field.type = 'text';
@@ -80,3 +90,29 @@
         });
     }
 </script>
+
+<style>
+    .input-container {
+        position: relative;
+    }
+    .text-red-500 {
+        color: #f56565;
+    }
+    .text-sm {
+        font-size: 0.875rem;
+    }
+    .mt-2 {
+        margin-top: 0.5rem;
+    }
+    .bg-red-500 ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    .bg-red-500 li {
+        margin-bottom: 0.5rem;
+    }
+    .bg-red-500 {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+</style>

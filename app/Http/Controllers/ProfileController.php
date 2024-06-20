@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends Controller
@@ -27,7 +28,17 @@ class ProfileController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                Password::min(8) // Minimum length of 8 characters
+                    ->mixedCase() // Requires at least one uppercase and one lowercase letter
+                    ->letters() // Requires at least one letter
+                    ->numbers() // Requires at least one number
+                    ->symbols(), // Requires at least one special character
+            ],
         ]);
 
         if (!Hash::check($request->current_password, $request->user()->password)) {
@@ -38,7 +49,7 @@ class ProfileController extends Controller
 
         $user = $request->user();
         $user->password = Hash::make($request->password);
-        $user->pass_status = $user->pass_status + 1;
+        $user->pass_status += 1;
         $user->save();
 
         return Redirect::route('profile.update-password-form')->with('status', 'Your password has been updated successfully');
