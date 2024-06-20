@@ -44,11 +44,13 @@
                                         type="password"
                                         name="password"
                                         id="password"
+                                        value="{{ old('password') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                         readonly
                                         onfocus="this.removeAttribute('readonly'); this.setAttribute('disabled', true);"
                                         onblur="this.removeAttribute('disabled'); this.setAttribute('readonly', true);"
                                     >
+                                    <input type="hidden" name="temp_password" id="temp_password" value="{{ old('password') }}">
                                     @error('password')
                                         <span id="password-error" class="text-red-500">{{ $message }}</span>
                                     @enderror
@@ -63,6 +65,8 @@
                                         id="name"
                                         value="{{ old('name') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        pattern="[a-zA-Z@ ]+"
+                                        title="Name can only contain alphabets and @"
                                         aria-describedby="name-error"
                                     >
                                     @error('name')
@@ -160,10 +164,13 @@
         </div>
     </div>
 </div>
-
 <script>
     window.onload = function () {
-        updatePassword(document.getElementById('ic'), document.getElementById('password'));
+        const icInput = document.getElementById('ic');
+        const passwordInput = document.getElementById('password');
+        const tempPasswordInput = document.getElementById('temp_password');
+
+        updatePassword(icInput, passwordInput, tempPasswordInput);
     };
 
     function removeNonNumeric(input) {
@@ -193,12 +200,20 @@
         }
     }
 
-    function updatePassword(icInput, passwordInput) {
+    function updatePassword(icInput, passwordInput, tempPasswordInput) {
         icInput.addEventListener('input', function () {
             let icNumber = this.value;
             icNumber = icNumber.replace(/[^0-9]/g, '');
-            passwordInput.value = icNumber;
+            if (icNumber.length === 12) {
+                passwordInput.value = icNumber;
+                tempPasswordInput.value = icNumber;
+            }
         });
+
+        // Set the password to the temp password value if it exists
+        if (tempPasswordInput.value) {
+            passwordInput.value = tempPasswordInput.value;
+        }
     }
 </script>
 @endsection
