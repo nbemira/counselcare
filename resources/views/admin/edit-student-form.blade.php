@@ -44,8 +44,9 @@
                                         type="text"
                                         name="name"
                                         id="name"
-                                        value="{{ $student->name }}"
+                                        value="{{ old('name', $student->name) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                     >
                                     @error('name')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -59,7 +60,7 @@
                                         type="email"
                                         name="email"
                                         id="email"
-                                        value="{{ $student->email }}"
+                                        value="{{ old('email', $student->email) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                     >
                                     @error('email')
@@ -142,4 +143,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
+    }
+</script>
 @endsection

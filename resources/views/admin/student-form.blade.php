@@ -13,6 +13,11 @@
                         {{ Session::get('message') }}
                     </div>
                 @endif
+                @if(Session::has('error'))
+                    <div class="bg-red-500 text-white px-4 py-2 rounded mb-4">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
                 <form method="post" action="{{ route('admin.add-student') }}" enctype="multipart/form-data">
                     @csrf
                     <table class="min-w-full divide-y divide-gray-200">
@@ -44,6 +49,7 @@
                                         type="password"
                                         name="password"
                                         id="password"
+                                        value="{{ old('ic') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                         readonly
                                         onfocus="this.removeAttribute('readonly'); this.setAttribute('disabled', true);"
@@ -63,6 +69,7 @@
                                         id="name"
                                         value="{{ old('name') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                         aria-describedby="name-error"
                                     >
                                     @error('name')
@@ -95,30 +102,31 @@
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                         aria-describedby="class-error"
                                     >
-                                        <option value="1S">1S</option>
-                                        <option value="1T">1T</option>
-                                        <option value="1E">1E</option>
-                                        <option value="1L">1L</option>
-                                        <option value="2S">2S</option>
-                                        <option value="2T">2T</option>
-                                        <option value="2E">2E</option>
-                                        <option value="2L">2L</option>
-                                        <option value="2A">2A</option>
-                                        <option value="3S">3S</option>
-                                        <option value="3T">3T</option>
-                                        <option value="3E">3E</option>
-                                        <option value="3L">3L</option>
-                                        <option value="3A">3A</option>
-                                        <option value="4S">4S</option>
-                                        <option value="4T">4T</option>
-                                        <option value="4E">4E</option>
-                                        <option value="4L">4L</option>
-                                        <option value="4A">4A</option>
-                                        <option value="5S">5S</option>
-                                        <option value="5T">5T</option>
-                                        <option value="5E">5E</option>
-                                        <option value="5L">5L</option>
-                                        <option value="5A">5A</option>
+                                        <!-- Add all class options here -->
+                                        <option value="1S" {{ old('class') == '1S' ? 'selected' : '' }}>1S</option>
+                                        <option value="1T" {{ old('class') == '1T' ? 'selected' : '' }}>1T</option>
+                                        <option value="1E" {{ old('class') == '1E' ? 'selected' : '' }}>1E</option>
+                                        <option value="1L" {{ old('class') == '1L' ? 'selected' : '' }}>1L</option>
+                                        <option value="2S" {{ old('class') == '2S' ? 'selected' : '' }}>2S</option>
+                                        <option value="2T" {{ old('class') == '2T' ? 'selected' : '' }}>2T</option>
+                                        <option value="2E" {{ old('class') == '2E' ? 'selected' : '' }}>2E</option>
+                                        <option value="2L" {{ old('class') == '2L' ? 'selected' : '' }}>2L</option>
+                                        <option value="2A" {{ old('class') == '2A' ? 'selected' : '' }}>2A</option>
+                                        <option value="3S" {{ old('class') == '3S' ? 'selected' : '' }}>3S</option>
+                                        <option value="3T" {{ old('class') == '3T' ? 'selected' : '' }}>3T</option>
+                                        <option value="3E" {{ old('class') == '3E' ? 'selected' : '' }}>3E</option>
+                                        <option value="3L" {{ old('class') == '3L' ? 'selected' : '' }}>3L</option>
+                                        <option value="3A" {{ old('class') == '3A' ? 'selected' : '' }}>3A</option>
+                                        <option value="4S" {{ old('class') == '4S' ? 'selected' : '' }}>4S</option>
+                                        <option value="4T" {{ old('class') == '4T' ? 'selected' : '' }}>4T</option>
+                                        <option value="4E" {{ old('class') == '4E' ? 'selected' : '' }}>4E</option>
+                                        <option value="4L" {{ old('class') == '4L' ? 'selected' : '' }}>4L</option>
+                                        <option value="4A" {{ old('class') == '4A' ? 'selected' : '' }}>4A</option>
+                                        <option value="5S" {{ old('class') == '5S' ? 'selected' : '' }}>5S</option>
+                                        <option value="5T" {{ old('class') == '5T' ? 'selected' : '' }}>5T</option>
+                                        <option value="5E" {{ old('class') == '5E' ? 'selected' : '' }}>5E</option>
+                                        <option value="5L" {{ old('class') == '5L' ? 'selected' : '' }}>5L</option>
+                                        <option value="5A" {{ old('class') == '5A' ? 'selected' : '' }}>5A</option>
                                     </select>
                                     @error('class')
                                         <span id="class-error" class="text-red-500">{{ $message }}</span>
@@ -134,8 +142,8 @@
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                         aria-describedby="gender-error"
                                     >
-                                        <option value="female">Female</option>
-                                        <option value="male">Male</option>
+                                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                     </select>
                                     @error('gender')
                                         <span id="gender-error" class="text-red-500">{{ $message }}</span>
@@ -199,6 +207,14 @@
             icNumber = icNumber.replace(/[^0-9]/g, '');
             passwordInput.value = icNumber;
         });
+        passwordInput.value = icInput.value.replace(/[^0-9]/g, ''); // Initial load
+    }
+
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
     }
 </script>
 @endsection
