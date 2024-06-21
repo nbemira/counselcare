@@ -7,7 +7,6 @@ use App\Models\Psychologist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Image;
 
 class ManagePsychologistController extends Controller
@@ -50,9 +49,9 @@ class ManagePsychologistController extends Controller
     {
         $this->validate($request, [
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required|string|max:255',
-            'qualifications' => 'nullable|string|max:255',
-            'specialization' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+            'qualifications' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
+            'specialization' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'email' => 'nullable|email|max:255',
             'phone' => ['nullable', 'regex:/^0?\d{9,10}$/'],
             'location' => 'nullable|string|max:255',
@@ -99,9 +98,9 @@ class ManagePsychologistController extends Controller
     {
         $this->validate($request, [
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required|string|max:255',
-            'qualifications' => 'nullable|string|max:255',
-            'specialization' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+            'qualifications' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
+            'specialization' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'email' => 'nullable|email|max:255',
             'phone' => ['nullable', 'regex:/^0?\d{9,10}$/'],
             'location' => 'nullable|string|max:255',
@@ -125,14 +124,8 @@ class ManagePsychologistController extends Controller
                 File::makeDirectory($path, 0777, true, true);
             }
 
-            // Resize and save the image using GD
-            $image = imagecreatefromstring(file_get_contents($psychologistIcon->getPathname()));
-            $resizedImage = imagescale($image, 300, 300);
-            imagejpeg($resizedImage, $path . '/' . $imageName);
-
-            // Free up memory
-            imagedestroy($image);
-            imagedestroy($resizedImage);
+            // Move the new image to the directory
+            $psychologistIcon->move($path, $imageName);
 
             // Delete the old image if exists
             if ($psychologist->icon && File::exists($path . '/' . $psychologist->icon)) {

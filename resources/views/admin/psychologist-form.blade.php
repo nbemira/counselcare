@@ -14,6 +14,11 @@
                         {{ Session::get('message') }}
                     </div>
                 @endif
+                @if(session('error'))
+                    <div class="bg-red-500 text-white px-4 py-2 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <form method="post" action="{{ route('admin.add-psychologist') }}" enctype="multipart/form-data">
                     @csrf
                     <table class="min-w-full divide-y divide-gray-200">
@@ -41,6 +46,7 @@
                                         id="name"
                                         value="{{ old('name') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                         required
                                     >
                                     @error('name')
@@ -57,6 +63,7 @@
                                         id="qualifications"
                                         value="{{ old('qualifications') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateAlphaExtended(this);"
                                     >
                                     @error('qualifications')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -72,6 +79,7 @@
                                         id="specialization"
                                         value="{{ old('specialization') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateAlphaExtended(this);"
                                     >
                                     @error('specialization')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -103,6 +111,7 @@
                                         maxlength="11"
                                         value="{{ old('phone') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validatePhone(this);"
                                     >
                                     @error('phone')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -157,4 +166,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
+    }
+
+    function validateAlphaExtended(input) {
+        const regex = /^[A-Za-z\s().]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s().]/g, '');
+        }
+    }
+
+    function validatePhone(input) {
+        input.value = input.value.replace(/[^0-9]/g, '');
+    }
+</script>
+
 @endsection

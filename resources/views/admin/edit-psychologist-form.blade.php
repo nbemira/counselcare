@@ -15,7 +15,7 @@
                 @endif
 
                 @if($psychologist)
-                <form method="post" action="{{ route('admin.edit-psychologist', ['id' => $psychologist->id]) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('admin.edit-psychologist', $psychologist->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <table class="min-w-full divide-y divide-gray-200">
@@ -27,15 +27,14 @@
                                         type="file"
                                         name="icon"
                                         id="icon"
-                                        class="p-2 border rounded-md w-full"
+                                        class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                     >
-                                    @if ($psychologist->icon)
-                                        <span class="text-gray-500">Current icon:</span>
-                                        <img src="{{ asset('images/psychologists/' . $psychologist->icon) }}" alt="Current Icon" class="mt-2 w-20 h-20 object-contain">
-                                    @endif
                                     @error('icon')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
+                                    @if($psychologist->icon)
+                                        <img src="{{ asset('images/psychologists/' . $psychologist->icon) }}" alt="Psychologist Icon" class="mt-2" style="max-height: 100px;">
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -47,6 +46,7 @@
                                         id="name"
                                         value="{{ old('name', $psychologist->name) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                     >
                                     @error('name')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -62,6 +62,7 @@
                                         id="qualifications"
                                         value="{{ old('qualifications', $psychologist->qualifications) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateAlphaExtended(this);"
                                     >
                                     @error('qualifications')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -77,6 +78,7 @@
                                         id="specialization"
                                         value="{{ old('specialization', $psychologist->specialization) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateAlphaExtended(this);"
                                     >
                                     @error('specialization')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -108,6 +110,7 @@
                                         maxlength="11"
                                         value="{{ old('phone', $psychologist->phone) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validatePhone(this);"
                                     >
                                     @error('phone')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -165,4 +168,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
+    }
+
+    function validateAlphaExtended(input) {
+        const regex = /^[A-Za-z\s().]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s().]/g, '');
+        }
+    }
+
+    function validatePhone(input) {
+        input.value = input.value.replace(/[^0-9]/g, '');
+    }
+</script>
+
 @endsection
