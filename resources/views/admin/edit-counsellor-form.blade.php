@@ -31,8 +31,6 @@
                                         class="p-2 border rounded-md bg-gray-100 w-full"
                                         maxlength="12"
                                         readonly
-                                        onfocus="this.removeAttribute('readonly'); this.setAttribute('disabled', true);"
-                                        onblur="this.removeAttribute('disabled'); this.setAttribute('readonly', true);"
                                     >
                                     <p class="text-gray-500 text-xs mt-1">IC number cannot be changed.</p>
                                 </td>
@@ -44,8 +42,9 @@
                                         type="text"
                                         name="name"
                                         id="name"
-                                        value="{{ $counsellor->name }}"
+                                        value="{{ old('name', $counsellor->name) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                     >
                                     @error('name')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -59,7 +58,7 @@
                                         type="email"
                                         name="email"
                                         id="email"
-                                        value="{{ $counsellor->email }}"
+                                        value="{{ old('email', $counsellor->email) }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
                                     >
                                     @error('email')
@@ -88,4 +87,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
+    }
+</script>
 @endsection

@@ -39,8 +39,8 @@ class ManageCounsellorController extends Controller
             $this->validate($request, [
                 'ic' => 'required|string|digits:12|unique:users',
                 'password' => 'required|string|max:255',
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
+                'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+                'email' => 'required|email|max:255|unique:users',
             ]);
 
             $counsellor = new User($request->all());
@@ -53,7 +53,7 @@ class ManageCounsellorController extends Controller
             return redirect()->route('admin.manage-counsellors');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) {
-                return redirect()->route('admin.counsellor-form')->with('error', 'Counsellor with this IC already exists.');
+                return redirect()->route('admin.counsellor-form')->with('error', 'Counsellor with this IC or email already exists.')->withInput();
             } else {
                 return redirect()->route('admin.manage-counsellors')->with('error', 'An error occurred while adding the Counsellor.');
             }
@@ -70,8 +70,8 @@ class ManageCounsellorController extends Controller
     {
         $this->validate($request, [
             'ic' => 'required|string|digits:12',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+            'email' => 'required|email|max:255|unique:users,email,' . $ic . ',ic',
         ]);
 
         $counsellor = User::where('ic', $ic)->firstOrFail();

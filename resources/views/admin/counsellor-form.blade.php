@@ -8,7 +8,6 @@
                 Add New Counsellor
             </div>
             <div class="p-4">
-                <!-- Alert Messages -->
                 @if(Session::has('message'))
                     <div class="bg-green-500 text-white px-4 py-2 rounded mb-4">
                         {{ Session::get('message') }}
@@ -19,7 +18,6 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <!-- Form -->
                 <form method="post" action="{{ route('admin.add-counsellor') }}" enctype="multipart/form-data">
                     @csrf
                     <table class="min-w-full divide-y divide-gray-200">
@@ -69,6 +67,7 @@
                                         id="name"
                                         value="{{ old('name') }}"
                                         class="p-2 border rounded-md focus:border-blue-500 focus:outline-none w-full"
+                                        oninput="validateName(this);"
                                     >
                                     @error('name')
                                         <span class="text-red-500">{{ $message }}</span>
@@ -147,6 +146,14 @@
             icNumber = icNumber.replace(/[^0-9]/g, '');
             passwordInput.value = icNumber;
         });
+        passwordInput.value = icInput.value.replace(/[^0-9]/g, ''); // Initial load
+    }
+
+    function validateName(input) {
+        const regex = /^[A-Za-z\s@]+$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+        }
     }
 </script>
 
