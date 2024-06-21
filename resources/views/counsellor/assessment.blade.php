@@ -30,7 +30,7 @@
                 </div>
                 <div class="mb-6">
                     <div class="p-4 bg-blue-50 border border-blue-200 rounded-md shadow-md">
-                        <h3 class="text-lg text-gray-800 font-extrabold mb-2">Answers for each question</h3>
+                        <h3 class="text-lg text-gray-800 font-bold mb-2">Answers for each question</h3>
                         <div class="grid grid-cols-2 gap-2 ml-4">
                             <div class="bullet-item font-medium">Did not apply to me at all:</div>
                             <div>0 point</div>
