@@ -30,13 +30,17 @@
                 </div>
                 <div class="mb-6">
                     <div class="p-4 bg-blue-50 border border-blue-200 rounded-md shadow-md">
-                        <h3 class="text-lg text-gray-800 font-medium mb-2">Answers for Each Question</h3>
-                        <ul class="list-disc list-inside ml-4">
-                            <li class="mb-1"><strong>Did not apply to me at all:</strong> 0 point</li>
-                            <li class="mb-1"><strong>Applied to me to some degree, or some of the time:</strong> 1 point</li>
-                            <li class="mb-1"><strong>Applied to me to a considerable degree, or a good part of the time:</strong> 2 point</li>
-                            <li><strong>Applied to me very much, or most of the time:</strong> 3 point</li>
-                        </ul>
+                        <h3 class="text-lg text-gray-800 font-extrabold mb-2">Answers for each question</h3>
+                        <div class="grid grid-cols-2 gap-2 ml-4">
+                            <div class="bullet-item font-medium">Did not apply to me at all:</div>
+                            <div>0 point</div>
+                            <div class="bullet-item font-medium">Applied to me to some degree, or some of the time:</div>
+                            <div>1 point</div>
+                            <div class="bullet-item font-medium">Applied to me to a considerable degree, or a good part of the time:</div>
+                            <div>2 point</div>
+                            <div class="bullet-item font-medium">Applied to me very much, or most of the time:</div>
+                            <div>3 point</div>
+                        </div>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -113,7 +117,7 @@
                                         @foreach($questions->whereNotIn('category_id', array_keys($categories)) as $key => $question)
                                             <tr>
                                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{{ $loop->iteration }}</td>
-                                                <td class="px-4 py-4 whitespace-normal text-sm text-gray-900 text-center">{{ $question->question }}</td>
+                                                <td class="px-4 py-4 whitespace-normal text-sm text-gray-900 text-left">{{ $question->question }}</td>
                                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-center font-medium flex items-center justify-center space-x-2">
                                                     <a href="{{ route('counsellor.edit-question', $question->id) }}" class="text-indigo-600 hover:text-indigo-900">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-edit">
@@ -123,7 +127,7 @@
                                                             <path d="M16 5l3 3" />
                                                         </svg>
                                                     </a>
-                                                    <form method="post" action="{{ route('counsellor.delete-question', $question->id) }}" class="inline-block">
+                                                    <form method="post" action="{{ route('counsellor.delete-question', $question->id) }}" class="inline-block" onsubmit="return confirmDelete()">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="text-red-500">
@@ -186,6 +190,14 @@
         left: 3px;
         transition: transform 0.2s;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
+    }
+
+    .bullet-item::before {
+        content: '•';
+        color: black;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
     }
 </style>
 

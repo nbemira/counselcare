@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class CounsellorAssessmentController extends Controller
 {
-
     public function getQuestionList()
     {
         $questions = Question::all();
@@ -28,7 +27,7 @@ class CounsellorAssessmentController extends Controller
     public function postAddQuestion(Request $request)
     {
         $request->validate([
-            'question' => 'required',
+            'question' => 'required|regex:/^[^\d]*$/',
             'category' => 'required|in:1,2,3',
         ]);
 
@@ -48,7 +47,7 @@ class CounsellorAssessmentController extends Controller
     public function putEditQuestion(Request $request, Question $question)
     {
         $request->validate([
-            'question' => 'required',
+            'question' => 'required|regex:/^[^\d]*$/',
             'category' => 'required|in:1,2,3',
         ]);
 
@@ -74,5 +73,4 @@ class CounsellorAssessmentController extends Controller
 
         return response()->json(['enabled' => $setting->assessment_enabled]);
     }
-
 }

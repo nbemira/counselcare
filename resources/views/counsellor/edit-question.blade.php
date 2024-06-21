@@ -8,22 +8,24 @@
                 Edit Question
             </div>
             <div class="p-2">
-                <!-- Body content goes here -->
+                <!-- Message Alert -->
                 @if(Session::has('message'))
-                <div class="bg-green-500 text-white px-4 py-2 rounded">
-                    <!-- Alert content goes here -->
-                    {{ Session::get('message') }}
-                </div>
+                    <div class="bg-green-500 text-white px-4 py-2 rounded">
+                        {{ Session::get('message') }}
+                    </div>
                 @endif
                 <form method="POST" action="{{ route('counsellor.put-edit-question', $question->id) }}">
                     @csrf
-                    <input type="hidden" name="_method" value="PUT">
+                    @method('PUT')
                     <table class="min-w-full divide-y divide-gray-200">
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrapf font-medium text-gray-700">Question</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-700">Question</td>
                                 <td class="px-6 py-4">
-                                    <textarea id="question" name="question" class="p-2 border rounded-md focus:border-blue-500 focus:outline-none no-scrollbar w-full" rows="1">{{ $question->question }}</textarea>
+                                    <textarea id="question" name="question" class="p-2 border rounded-md focus:border-blue-500 focus:outline-none no-scrollbar w-full" rows="1" oninput="validateQuestion(this);">{{ $question->question }}</textarea>
+                                    @error('question')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </td>
                             </tr>
                             <tr>
@@ -34,6 +36,9 @@
                                         <option value="2" @if($question->category_id == 2) selected @endif>Anxiety</option>
                                         <option value="3" @if($question->category_id == 3) selected @endif>Stress</option>
                                     </select>
+                                    @error('category')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </td>
                             </tr>
                             <tr>
@@ -68,6 +73,13 @@
 </style>
 
 <script>
+    function validateQuestion(input) {
+        const regex = /^[^\d]*$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.replace(/\d+/g, '');
+        }
+    }
+
     // Adjust textarea height dynamically based on content
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('textarea').forEach(function(textarea) {
