@@ -49,7 +49,7 @@ class ManagePsychologistController extends Controller
     {
         $this->validate($request, [
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s.@]+$/',
             'qualifications' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'specialization' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'email' => 'nullable|email|max:255',
@@ -98,7 +98,7 @@ class ManagePsychologistController extends Controller
     {
         $this->validate($request, [
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required|string|max:255|regex:/^[A-Za-z\s@]+$/',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s.@]+$/',
             'qualifications' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'specialization' => 'nullable|string|max:255|regex:/^[A-Za-z\s().]+$/',
             'email' => 'nullable|email|max:255',
