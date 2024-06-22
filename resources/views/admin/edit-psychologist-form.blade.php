@@ -173,7 +173,7 @@
     function validateName(input) {
         const regex = /^[A-Za-z\s.@]+$/;
         if (!regex.test(input.value)) {
-            input.value = input.value.replace(/[^A-Za-z\s@]/g, '');
+            input.value = input.value.replace(/[^A-Za-z\s.@]/g, '');
         }
     }
 
