@@ -243,6 +243,7 @@ class CaseController extends Controller
     {
         $studentIc = $request->input('student_ic');
         $psychologistId = $request->input('psychologist_id');
+        $customMessage = $request->input('customMessage');
     
         $student = Student::where('ic', $studentIc)->first();
         $psychologist = Psychologist::find($psychologistId);
@@ -250,18 +251,30 @@ class CaseController extends Controller
         // Fetch the counsellor's details (assuming the logged-in user is the counsellor)
         $counsellor = auth()->user();
     
+        // Fetch first and second assessment marks
+        $firstAssessment = Result::where('ic', $studentIc)
+            ->where('assessment_round', 1)
+            ->first(['marks_d as first_marks_d', 'marks_a as first_marks_a', 'marks_s as first_marks_s']);
+    
+        $secondAssessment = Result::where('ic', $studentIc)
+            ->where('assessment_round', 2)
+            ->first(['marks_d as second_marks_d', 'marks_a as second_marks_a', 'marks_s as second_marks_s']);
+    
         $data = [
             'student' => $student,
             'psychologist' => $psychologist,
             'date' => now()->format('d M Y'),
             'counsellor' => $counsellor,
+            'customMessage' => $customMessage,
+            'firstAssessment' => $firstAssessment,
+            'secondAssessment' => $secondAssessment,
         ];
     
         $pdf = PDF::loadView('pdf.letter', $data);
-  
+    
         $filename = $student->name . ' intervention letter.pdf';
     
         return $pdf->download($filename);
-    }    
+    }     
 
 }

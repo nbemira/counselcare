@@ -30,12 +30,32 @@
         .justified {
             text-align: justify;
         }
-        table {
+        table.visible-table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        td {
-            padding: 2px 0;
+        table.visible-table th, table.visible-table td {
+            padding: 5px;
+            border: 1px solid #ddd;
+        }
+        table.visible-table th {
+            text-align: center; /* Center-align the text in headers */
+        }
+        table.visible-table td {
+            text-align: center; /* Center-align the text in all cells by default */
+        }
+        table.visible-table td:first-child {
+            text-align: left; /* Left-align the text in the first column */
+        }
+        table.hidden-table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        table.hidden-table td {
+            padding: 5px;
+            text-align: left;
+            border: none;
         }
         .label {
             width: 30%;
@@ -58,6 +78,11 @@
             margin: 0;
             padding: 0;
         }
+
+        /* Page Break CSS */
+        .page-break {
+            page-break-before: always;
+        }
     </style>
 </head>
 <body>
@@ -75,11 +100,73 @@
         <div class="letter">
             <p>Dear Parents/Guardians,</p>
             <p></p>
-            <p><strong>Assigned Psychologist for {{ $student->name }}</strong></p>
-            <p></p>
             <p class="justified">We are writing to inform you that a psychologist has been assigned to assist {{ $student->name }} with their intervention. Please find the details of the assigned psychologist below:</p>
             <p></p>
-            <table>
+            <p class="justified"><strong>Screening Score Reference:</strong></p>
+            <table class="visible-table">
+                <tr>
+                    <th>Category</th>
+                    <th>Normal</th>
+                    <th>Mild</th>
+                    <th>Moderate</th>
+                    <th>Severe</th>
+                    <th>Very Severe</th>
+                </tr>
+                <tr>
+                    <td><strong>Depression</strong></td>
+                    <td>0 - 5</td>
+                    <td>6 - 7</td>
+                    <td>8 - 10</td>
+                    <td>11 - 14</td>
+                    <td>15+</td>
+                </tr>
+                <tr>
+                    <td><strong>Anxiety</strong></td>
+                    <td>0 - 4</td>
+                    <td>5 - 6</td>
+                    <td>7 - 8</td>
+                    <td>9 - 10</td>
+                    <td>11+</td>
+                </tr>
+                <tr>
+                    <td><strong>Stress</strong></td>
+                    <td>0 - 7</td>
+                    <td>8 - 9</td>
+                    <td>10 - 13</td>
+                    <td>14 - 17</td>
+                    <td>18+</td>
+                </tr>
+            </table>
+            <p></p>
+            <p class="justified"><strong>{{ $student->name }}'s Assessment Marks:</strong></p>
+            <table class="visible-table">
+                <tr>
+                    <th>Assessment Round</th>
+                    <th>Depression Marks</th>
+                    <th>Anxiety Marks</th>
+                    <th>Stress Marks</th>
+                </tr>
+                <tr>
+                    <td><strong>First Assessment</strong></td>
+                    <td>{{ $firstAssessment->first_marks_d ?? 'N/A' }}</td>
+                    <td>{{ $firstAssessment->first_marks_a ?? 'N/A' }}</td>
+                    <td>{{ $firstAssessment->first_marks_s ?? 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Second Assessment</strong></td>
+                    <td>{{ $secondAssessment->second_marks_d ?? 'N/A' }}</td>
+                    <td>{{ $secondAssessment->second_marks_a ?? 'N/A' }}</td>
+                    <td>{{ $secondAssessment->second_marks_s ?? 'N/A' }}</td>
+                </tr>
+            </table>
+            <div class="page-break"></div>
+            <p><strong>Counsellor's Note from First Intervention Appointment to Psychologist:</strong></p>
+            @if($customMessage)
+                <p class="justified">{{ $customMessage }}</p>
+            @endif
+            <p></p>
+            <p><strong>Assigned Psychologist for {{ $student->name }}</strong></p>
+            <table class="hidden-table">
                 @if($psychologist->name)
                     <tr>
                         <td class="label">Psychologist</td>
@@ -133,7 +220,7 @@
             <p></p>
             <p class="justified">Kindly contact the psychologist to arrange {{ $student->name }}'s first session. We understand this may feel overwhelming, but our team is here to support you and {{ $student->name }} every step of the way. Our goal is to ensure the well-being and success of all our students.</p>
             <p></p>
-            <p class="justified">Please do not hesitate to reach out to us if you have any questions or concerns. Together, we can create a positive and supportive environment for {{ $student->name }} to thrive.</p>
+            <p class="justified">Please do not hesitate to reach out to us if you have any questions or concerns. Together, we can create a positive and supportive environment for {{ $student->name }}.</p>
             <p></p>
             <p>Best regards,</p>
             <p>Teacher {{ $counsellor->name }}</p>

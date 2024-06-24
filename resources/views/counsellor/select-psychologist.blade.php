@@ -19,37 +19,43 @@
                     </div>
                 @endif
                 <form method="POST" action="{{ route('counsellor.generatePdf') }}">
-                    @csrf
-                    <input type="hidden" name="student_ic" value="{{ $student_ic }}">
-                    <input type="hidden" name="psychologist_id" id="selectedPsychologistId">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($psychologists as $psychologist)
-                        <div class="psychologist-card bg-white border rounded-lg shadow-md cursor-pointer text-center transition duration-300 ease-in-out transform hover:scale-105 hover:border-blue-500 p-4 flex flex-col items-center" onclick="selectPsychologist(this, '{{ $psychologist->id }}')">
-                            @if($psychologist->icon)
-                            <div class="relative">
-                                <div class="w-32 h-32">
-                                    <img src="{{ asset('images/psychologists/' . $psychologist->icon) }}" alt="{{ $psychologist->name }}" class="object-cover w-full h-full rounded-full">
-                                </div>
+                @csrf
+                <input type="hidden" name="student_ic" value="{{ $student_ic }}">
+                <input type="hidden" name="psychologist_id" id="selectedPsychologistId">
+
+                <div class="mb-4">
+                    <label for="customMessage" class="block text-sm font-medium text-gray-700">Counsellor's Note from First Intervention Appointment to Psychologist</label>
+                    <textarea id="customMessage" name="customMessage" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($psychologists as $psychologist)
+                    <div class="psychologist-card bg-white border rounded-lg shadow-md cursor-pointer text-center transition duration-300 ease-in-out transform hover:scale-105 hover:border-blue-500 p-4 flex flex-col items-center" onclick="selectPsychologist(this, '{{ $psychologist->id }}')">
+                        @if($psychologist->icon)
+                        <div class="relative">
+                            <div class="w-32 h-32">
+                                <img src="{{ asset('images/psychologists/' . $psychologist->icon) }}" alt="{{ $psychologist->name }}" class="object-cover w-full h-full rounded-full">
                             </div>
-                            @endif
-                            <h3 class="text-lg font-semibold mt-4">{{ $psychologist->name }}</h3>
-                            <p class="text-sm text-gray-600 mb-2">{{ $psychologist->specialization }}</p>
-                            <ul class="list-disc list-inside text-left mx-auto">
-                                @foreach($psychologist->getAttributes() as $key => $value)
-                                    @if($value !== null && !in_array($key, ['icon', 'created_at', 'updated_at', 'id', 'name', 'specialization']))
-                                        <li><span class="font-semibold">{{ ucwords(str_replace('_', ' ', $key)) }}:</span> {{ $value }}</li>
-                                    @endif
-                                @endforeach
-                            </ul>
                         </div>
-                        @endforeach
+                        @endif
+                        <h3 class="text-lg font-semibold mt-4">{{ $psychologist->name }}</h3>
+                        <p class="text-sm text-gray-600 mb-2">{{ $psychologist->specialization }}</p>
+                        <ul class="list-disc list-inside text-left mx-auto">
+                            @foreach($psychologist->getAttributes() as $key => $value)
+                                @if($value !== null && !in_array($key, ['icon', 'created_at', 'updated_at', 'id', 'name', 'specialization']))
+                                    <li><span class="font-semibold">{{ ucwords(str_replace('_', ' ', $key)) }}:</span> {{ $value }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
                     </div>
-                    <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-4 py-2 bg-blue-500 w-20 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-300 ease-in-out disabled:opacity-50" id="submitButton" disabled>
-                            Next
-                        </button>
-                    </div>
-                </form>
+                    @endforeach
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button type="submit" class="px-4 py-2 bg-blue-500 w-20 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-300 ease-in-out disabled:opacity-50" id="submitButton" disabled>
+                        Next
+                    </button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
