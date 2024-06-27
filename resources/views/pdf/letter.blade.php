@@ -100,7 +100,7 @@
         <div class="letter">
             <p>Dear Parents/Guardians,</p>
             <p></p>
-            <p class="justified">We are writing to inform you that a psychologist has been assigned to assist {{ $student->name }} with their intervention. Please find the details of the assigned psychologist below:</p>
+            <p class="justified">We are writing to inform you that {{ $student->name }}'s assessment results from the first and second rounds have raised concerns, prompting us to take this step to ensure her well-being. Hence, a psychologist has been assigned to assist {{ $student->name }} with their mental health. Please find the details of her assessment marks, the counsellor’s note to the psychologist, and the details of the assigned psychologist below:</p>
             <p></p>
             <p class="justified"><strong>Screening Score Reference:</strong></p>
             <table class="visible-table">
